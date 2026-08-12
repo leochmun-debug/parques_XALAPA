@@ -24,7 +24,7 @@ export default function Header() {
       </div>
 
       {/* Visita tus parques - constrained to the same 280px axis */}
-      <div className="w-[280px] mt-6 relative h-[80px]">
+      <div className="w-[280px] mt-10 relative h-[100px]">
         <Image 
           src="/visita_tus_parque_y_jardines.png" 
           alt="Visita tus parques y jardines" 
@@ -36,7 +36,7 @@ export default function Header() {
       {/* Institutional Logos 
            STRICT AXIS RULE: Header block width forced to exactly 280px.
            The right edge of the third logo aligns perfectly with this axis. */}
-      <div className="flex flex-row items-center justify-between w-[280px] mt-6 h-[40px] relative gap-2">
+      <div className="flex flex-row items-center justify-between w-[280px] mt-8 h-[50px] relative gap-2">
         <div className="relative w-1/3 h-full">
           <Image src="/logo_ayuntamiento_xalapa_negro.png" alt="Ayuntamiento" fill className="object-contain object-left" />
         </div>
