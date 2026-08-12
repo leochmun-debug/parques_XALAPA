@@ -23,21 +23,6 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Institutional Logos 
-           STRICT AXIS RULE: Header block width forced to exactly 280px.
-           The right edge of the third logo aligns perfectly with this axis. */}
-      <div className="flex flex-row items-center justify-between w-[280px] mt-6 h-[40px] relative">
-        <div className="relative w-[30%] h-full">
-          <Image src="/logo_del_ayuntamiento_sombra.png" alt="Ayuntamiento" fill className="object-contain object-left" />
-        </div>
-        <div className="relative w-[38%] h-full">
-          <Image src="/direccion_de_desarrollo_urbano_sombra.png" alt="Desarrollo Urbano" fill className="object-contain object-center" />
-        </div>
-        <div className="relative w-[30%] h-full">
-          <Image src="/sub_planeacion_logo_sombra.png" alt="Planeación" fill className="object-contain object-right" />
-        </div>
-      </div>
-
       {/* Visita tus parques - constrained to the same 280px axis */}
       <div className="w-[280px] mt-6 relative h-[80px]">
         <Image 
@@ -46,6 +31,21 @@ export default function Header() {
           fill
           className="object-contain object-left" 
         />
+      </div>
+
+      {/* Institutional Logos 
+           STRICT AXIS RULE: Header block width forced to exactly 280px.
+           The right edge of the third logo aligns perfectly with this axis. */}
+      <div className="flex flex-row items-center justify-between w-[280px] mt-6 h-[40px] relative gap-2">
+        <div className="relative w-1/3 h-full">
+          <Image src="/logo_ayuntamiento_xalapa_negro.png" alt="Ayuntamiento" fill className="object-contain object-left" />
+        </div>
+        <div className="relative w-1/3 h-full">
+          <Image src="/direccion_desarrollo_urbano_negro.png" alt="Desarrollo Urbano" fill className="object-contain object-center" />
+        </div>
+        <div className="relative w-1/3 h-full">
+          <Image src="/medio_ambiente_logo_negro.png" alt="Medio Ambiente" fill className="object-contain object-right" />
+        </div>
       </div>
     </header>
   );

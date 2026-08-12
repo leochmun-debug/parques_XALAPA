@@ -106,7 +106,7 @@ export default function Map({ userLocation, parks }: MapProps) {
                       rel="noopener noreferrer"
                       className="inline-block mt-3 bg-blue-600 text-white font-helvetica font-bold uppercase text-[10px] px-3 py-1.5 hover:bg-blue-700 transition-colors w-full text-center"
                     >
-                      📍 Abrir en Google Maps
+                      Abrir en Google Maps
                     </a>
                   </div>
                 </div>

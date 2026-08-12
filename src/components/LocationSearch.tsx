@@ -82,7 +82,7 @@ export default function LocationSearch({ onLocationFound }: LocationSearchProps)
           disabled={loading}
           className="w-full bg-black text-white py-3 font-helvetica font-bold uppercase tracking-widest text-sm hover:bg-gray-800 transition-colors disabled:opacity-50"
         >
-          {loading ? "Buscando..." : "📍 Usar mi ubicación actual"}
+          {loading ? "Buscando..." : "Usar mi ubicación actual"}
         </button>
         
         <div className="flex items-center w-full">

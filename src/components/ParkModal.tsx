@@ -61,7 +61,7 @@ export default function ParkModal({ park, onClose }: ParkModalProps) {
             rel="noopener noreferrer"
             className="inline-block mt-4 bg-blue-600 text-white font-helvetica font-bold uppercase text-xs px-4 py-2 hover:bg-blue-700 transition-colors"
           >
-            📍 Ver en Google Maps
+            Ver en Google Maps
           </a>
         </div>
       </div>
