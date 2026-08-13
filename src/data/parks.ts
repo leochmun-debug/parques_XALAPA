@@ -7,7 +7,20 @@ export interface Park {
   lat: number;
   lng: number;
   image: string;
+  uso_general?: string;
+  infraestructura?: string;
+  año_inauguracion?: string;
+  estado_general?: string;
+  ultima_rehabilitacion?: string;
 }
+
+const defaultFields = {
+  uso_general: "Información no disponible",
+  infraestructura: "Información no disponible",
+  año_inauguracion: "Desconocido",
+  estado_general: "Sin evaluación reciente",
+  ultima_rehabilitacion: "No registrada"
+};
 
 export const parks: Park[] = [
   {
@@ -18,7 +31,8 @@ export const parks: Park[] = [
     escala: "Parque Urbano / De Bolsillo",
     lat: 19.524866,
     lng: -96.932281,
-    image: "/final_photos_to_use/parque_revolucion.jpg"
+    image: "/final_photos_to_use/parque_revolucion.jpg",
+    ...defaultFields
   },
   {
     name: "PARQUE ENRIQUE LOBATO BURGOS",
@@ -28,7 +42,8 @@ export const parks: Park[] = [
     escala: "Parque Urbano / De Bolsillo",
     lat: 19.525147,
     lng: -96.928776,
-    image: "/final_photos_to_use/parque_enrique_lobato_burgos.jpg"
+    image: "/final_photos_to_use/parque_enrique_lobato_burgos.jpg",
+    ...defaultFields
   },
   {
     name: "PARQUE HIDALGO",
@@ -38,7 +53,8 @@ export const parks: Park[] = [
     escala: "Parque Urbano / De Bolsillo",
     lat: 19.525195,
     lng: -96.919223,
-    image: "/final_photos_to_use/parque_hidalgo.jpg"
+    image: "/final_photos_to_use/parque_hidalgo.jpg",
+    ...defaultFields
   },
   {
     name: "PARQUE BENITO JUÁREZ",
@@ -48,7 +64,8 @@ export const parks: Park[] = [
     escala: "Parque Urbano / De Bolsillo",
     lat: 19.526831,
     lng: -96.923836,
-    image: "/final_photos_to_use/parque_juarez.jpg"
+    image: "/final_photos_to_use/parque_juarez.jpg",
+    ...defaultFields
   },
   {
     name: "PARQUE BICENTENARIO",
@@ -58,7 +75,8 @@ export const parks: Park[] = [
     escala: "Parque Urbano / De Bolsillo",
     lat: 19.527828,
     lng: -96.928316,
-    image: "/final_photos_to_use/parque_bicentenario.jpg"
+    image: "/final_photos_to_use/parque_bicentenario.jpg",
+    ...defaultFields
   },
   {
     name: "PARQUE ELISA ALARCON GODOS",
@@ -68,7 +86,8 @@ export const parks: Park[] = [
     escala: "Parque Urbano / De Bolsillo",
     lat: 19.528873,
     lng: -96.928808,
-    image: "/final_photos_to_use/parque_elisa_alarcon_godos.jpg"
+    image: "/final_photos_to_use/parque_elisa_alarcon_godos.jpg",
+    ...defaultFields
   },
   {
     name: "PARQUE MORELOS",
@@ -78,7 +97,8 @@ export const parks: Park[] = [
     escala: "Parque Urbano / De Bolsillo",
     lat: 19.528904,
     lng: -96.924868,
-    image: "/final_photos_to_use/parque_morelos.jpg"
+    image: "/final_photos_to_use/parque_morelos.jpg",
+    ...defaultFields
   },
   {
     name: "PARQUE NIÑO ARTILLERO",
@@ -88,7 +108,8 @@ export const parks: Park[] = [
     escala: "Parque Urbano / De Bolsillo",
     lat: 19.529354,
     lng: -96.915954,
-    image: "/final_photos_to_use/parque_nino_artillero.jpg"
+    image: "/final_photos_to_use/parque_nino_artillero.jpg",
+    ...defaultFields
   },
   {
     name: "BARRIO XALLITIC",
@@ -98,7 +119,8 @@ export const parks: Park[] = [
     escala: "Parque Urbano / De Bolsillo",
     lat: 19.531429,
     lng: -96.922167,
-    image: "/final_photos_to_use/barrio_xallitic.jpg"
+    image: "/final_photos_to_use/barrio_xallitic.jpg",
+    ...defaultFields
   },
   {
     name: "PARQUE 5 DE FEBRERO",
@@ -108,7 +130,8 @@ export const parks: Park[] = [
     escala: "Parque Urbano / De Bolsillo",
     lat: 19.533169,
     lng: -96.917461,
-    image: "/final_photos_to_use/parque_5_de_febrero.jpg"
+    image: "/final_photos_to_use/parque_5_de_febrero.jpg",
+    ...defaultFields
   },
   {
     name: "EL FAROLITO",
@@ -118,6 +141,7 @@ export const parks: Park[] = [
     escala: "Parque Urbano / De Bolsillo",
     lat: 19.53952,
     lng: -96.92607,
-    image: "/final_photos_to_use/el_farolito.jpg"
+    image: "/final_photos_to_use/el_farolito.jpg",
+    ...defaultFields
   }
 ];

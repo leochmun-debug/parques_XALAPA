@@ -75,20 +75,20 @@ export default function LocationSearch({ onLocationFound }: LocationSearchProps)
   };
 
   return (
-    <div className="w-full px-4 mt-6 mb-4 flex flex-col items-start justify-start text-left font-andale text-[11pt]">
+    <div className="w-full mt-6 mb-4 flex flex-col items-start justify-start text-left font-andale text-[11pt]">
       <div className="w-full flex flex-col space-y-3">
         <button 
           onClick={handleAutoLocation}
           disabled={loading}
-          className="w-full bg-black text-white py-3 font-helvetica font-bold uppercase tracking-widest text-sm hover:bg-gray-800 transition-colors disabled:opacity-50"
+          className="w-full bg-white border-2 border-black text-black py-3 font-andale lowercase tracking-widest text-sm hover:bg-gray-100 transition-opacity duration-200 hover:opacity-75 active:opacity-50 disabled:opacity-50"
         >
-          {loading ? "Buscando..." : "Usar mi ubicación actual"}
+          {loading ? "buscando..." : "usar mi ubicación"}
         </button>
         
         <div className="flex items-center w-full">
-          <div className="flex-grow h-[1px] bg-gray-300"></div>
-          <span className="px-3 text-gray-500 text-xs uppercase font-helvetica font-bold">O BUSCAR</span>
-          <div className="flex-grow h-[1px] bg-gray-300"></div>
+          <div className="flex-grow h-[2px] bg-black"></div>
+          <span className="px-3 text-black text-xs uppercase font-andale">O BUSCAR</span>
+          <div className="flex-grow h-[2px] bg-black"></div>
         </div>
 
         <form onSubmit={handleManualSearch} className="w-full flex flex-row">
@@ -98,20 +98,20 @@ export default function LocationSearch({ onLocationFound }: LocationSearchProps)
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             disabled={loading}
-            className="flex-grow border-2 border-black border-r-0 px-3 py-2 outline-none focus:bg-gray-50"
+            className="flex-grow border-2 border-black border-r-0 px-3 py-3 outline-none focus:bg-gray-50 font-andale"
           />
           <button 
             type="submit"
             disabled={loading || !searchQuery.trim()}
-            className="bg-black text-white px-4 font-helvetica font-bold uppercase disabled:opacity-50"
+            className="bg-black text-white px-6 font-andale uppercase transition-opacity duration-200 hover:opacity-75 active:opacity-50 disabled:opacity-50"
           >
-            Ir
+            I R
           </button>
         </form>
       </div>
 
       {error && (
-        <p className="text-red-600 text-xs mt-2 font-helvetica font-bold">{error}</p>
+        <p className="text-red-600 text-xs mt-2 font-andale font-bold">{error}</p>
       )}
     </div>
   );
