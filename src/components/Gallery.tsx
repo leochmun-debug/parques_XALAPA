@@ -12,7 +12,7 @@ interface GalleryProps {
 
 export default function Gallery({ parks, onParkClick }: GalleryProps) {
   return (
-    <section className="w-full py-12 mb-16 overflow-hidden">
+    <section className="w-full pt-2 pb-12 mb-16 overflow-hidden">
       {/* STRICT AXIS RULE: Gallery items gap alignment. 
            We defined the header axis at exactly 280px width (plus 16px left padding = 296px).
            Card 1 (132px) + Gap (16px) + Card 2 (132px) = 280px width!

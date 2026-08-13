@@ -46,6 +46,25 @@ export default function Home() {
     setActiveView(previousView);
   };
 
+  const handleHeaderNav = (view: 'inicio' | 'mapa' | 'archivo' | 'galeria') => {
+    if (view === 'archivo') {
+      setActiveView('archive');
+    } else {
+      setActiveView('dashboard');
+      setTimeout(() => {
+        if (view === 'inicio') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else if (view === 'mapa') {
+          const mapEl = document.getElementById('map-container');
+          if (mapEl) mapEl.scrollIntoView({ behavior: 'smooth' });
+        } else if (view === 'galeria') {
+          const galEl = document.getElementById('gallery-section');
+          if (galEl) galEl.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  };
+
   if (activeView === 'archive') {
     return <ArchiveView onParkSelect={(park) => handleOpenModal(park, 'archive')} onClose={() => setActiveView('dashboard')} />;
   }
@@ -58,7 +77,7 @@ export default function Home() {
     <main className="w-full flex flex-col items-center overflow-x-hidden min-h-screen font-andale text-black">
       <div className="w-full max-w-md mx-auto relative flex flex-col items-start justify-start text-left">
         
-        <Header />
+        <Header onNavigate={handleHeaderNav} />
         
         <Carousel />
 
@@ -114,7 +133,7 @@ export default function Home() {
         </div>
 
         {/* Gallery Subtitle */}
-        <div className="w-full px-4 mb-1 mt-4">
+        <div className="w-full px-4 mb-1 mt-4" id="gallery-section">
           <h2 className="font-helvetica font-bold text-xl tracking-wide leading-relaxed">
             O revisa nuestra galería aquí
           </h2>
