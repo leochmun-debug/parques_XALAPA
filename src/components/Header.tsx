@@ -17,19 +17,20 @@ export default function Header({ onNavigate }: HeaderProps) {
 
   return (
     <>
-      <header className="w-full pt-8 pb-6 lg:px-0 relative">
-        {/* Hamburger Menu - absolute top right on all views */}
-        <button 
-          onClick={() => setMenuOpen(true)}
-          className="absolute top-10 right-4 lg:right-6 w-8 h-8 flex flex-col justify-center space-y-1.5 p-1 group focus:outline-none hover:opacity-50 transition-opacity z-40" 
-          aria-label="Abrir Menu"
-        >
-          <span className="block w-full h-[2px] bg-black"></span>
-          <span className="block w-full h-[2px] bg-black"></span>
-          <span className="block w-3/4 h-[2px] bg-black ml-auto"></span>
-        </button>
+      <header className="w-full pt-16 pb-6 lg:px-0">
+        <div className="relative w-[280px] ml-8 lg:ml-0 flex flex-col justify-start items-start">
+          
+          {/* Hamburger Menu - perfectly tracks the right yellow line (left-full) and top aligns with logos */}
+          <button 
+            onClick={() => setMenuOpen(true)}
+            className="absolute top-2 left-full ml-4 lg:right-6 lg:left-auto w-8 h-8 flex flex-col justify-center space-y-1.5 p-1 group focus:outline-none hover:opacity-50 transition-opacity z-40" 
+            aria-label="Abrir Menu"
+          >
+            <span className="block w-full h-[2px] bg-black"></span>
+            <span className="block w-full h-[2px] bg-black"></span>
+            <span className="block w-3/4 h-[2px] bg-black ml-auto"></span>
+          </button>
 
-        <div className="flex flex-col justify-start items-start w-[280px] ml-8 lg:ml-0 pt-8 lg:pt-0">
           <div className="w-[280px] flex justify-start">
             <Image 
               src="/bienvenidos.png" 

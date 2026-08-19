@@ -95,7 +95,7 @@ export default function Home() {
             </div>
 
             {/* INTRO TEXT SECTION */}
-            <section className="w-[280px] ml-8 lg:ml-0 lg:w-full mt-6 flex flex-col items-start justify-start text-left">
+            <section className="w-[280px] ml-8 lg:ml-0 lg:w-full mt-10 flex flex-col items-start justify-start text-left">
               <h2 className="font-helvetica font-bold text-xl leading-normal mb-3">
                 Actividades culturales en nuestros parques
               </h2>
