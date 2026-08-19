@@ -17,7 +17,7 @@ export default function Header({ onNavigate }: HeaderProps) {
 
   return (
     <>
-      <header className="w-full pt-8 pb-6 px-4 lg:px-0 relative">
+      <header className="w-full pt-8 pb-6 lg:px-0 relative">
         {/* Hamburger Menu - absolute top right on all views */}
         <button 
           onClick={() => setMenuOpen(true)}
@@ -29,8 +29,8 @@ export default function Header({ onNavigate }: HeaderProps) {
           <span className="block w-3/4 h-[2px] bg-black ml-auto"></span>
         </button>
 
-        <div className="flex flex-col justify-start items-end w-full pt-8 lg:pt-0">
-          <div className="w-[280px] flex justify-end">
+        <div className="flex flex-col justify-start items-start w-full pt-8 lg:pt-0">
+          <div className="w-[280px] flex justify-start">
             <Image 
               src="/bienvenidos.png" 
               alt="Bienvenidos" 
@@ -41,7 +41,7 @@ export default function Header({ onNavigate }: HeaderProps) {
             />
           </div>
 
-          <div className="w-[280px] mt-4 flex justify-end">
+          <div className="w-[280px] mt-4 flex justify-start">
             <Image 
               src="/visita_tus_parque_y_jardines.png" 
               alt="Visita tus parques y jardines" 
@@ -51,7 +51,7 @@ export default function Header({ onNavigate }: HeaderProps) {
             />
           </div>
 
-          <div className="w-[280px] mt-2 flex justify-end">
+          <div className="w-[280px] mt-2 flex justify-start">
             <Image 
               src="/logo_triple_negros_usar.png" 
               alt="Logos Institucionales" 
