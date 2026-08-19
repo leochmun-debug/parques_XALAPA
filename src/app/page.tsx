@@ -81,8 +81,7 @@ export default function Home() {
 
   return (
     <main className="w-full flex flex-col items-center overflow-x-hidden min-h-screen font-andale text-black">
-      {/* Container: max-w-none to allow full width, reduced padding for flush left */}
-      <div className="w-full relative flex flex-col items-start justify-start text-left px-4 lg:px-6">
+      <div className="w-full relative flex flex-col items-start justify-start text-left lg:px-6">
         
         {/* DESKTOP TOP ROW */}
         <div className="w-full lg:flex lg:flex-row lg:justify-between lg:mb-12">
@@ -91,12 +90,12 @@ export default function Home() {
             <Header onNavigate={handleHeaderNav} />
             
             {/* Mobile Carousel - hidden on lg */}
-            <div className="lg:hidden -mx-4 w-[calc(100%+2rem)] sm:-mx-6 sm:w-[calc(100%+3rem)]">
+            <div className="lg:hidden w-full">
               <Carousel />
             </div>
 
             {/* INTRO TEXT SECTION */}
-            <section className="w-full px-4 lg:px-0 mt-6 flex flex-col items-start justify-start text-left">
+            <section className="w-full pl-4 pr-16 lg:px-0 mt-6 flex flex-col items-start justify-start text-left">
               <h2 className="font-helvetica font-bold text-xl leading-normal mb-3">
                 Actividades culturales en nuestros parques
               </h2>
