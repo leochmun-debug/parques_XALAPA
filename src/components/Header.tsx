@@ -29,7 +29,7 @@ export default function Header({ onNavigate }: HeaderProps) {
           <span className="block w-3/4 h-[2px] bg-black ml-auto"></span>
         </button>
 
-        <div className="flex flex-col justify-start items-start w-full pt-8 lg:pt-0 pl-4 pr-16 lg:px-0">
+        <div className="flex flex-col justify-start items-start w-[280px] ml-8 lg:ml-0 pt-8 lg:pt-0">
           <div className="w-[280px] flex justify-start">
             <Image 
               src="/bienvenidos.png" 
