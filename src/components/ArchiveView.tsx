@@ -6,6 +6,7 @@ interface ArchiveViewProps {
   onClose: () => void;
 }
 
+import Image from 'next/image';
 import { ScrambleText } from './ScrambleText';
 
 export default function ArchiveView({ onParkSelect, onClose }: ArchiveViewProps) {
@@ -58,9 +59,17 @@ export default function ArchiveView({ onParkSelect, onClose }: ArchiveViewProps)
             <div 
               key={index}
               onClick={() => onParkSelect(park)}
-              className="w-full border-b-2 lg:border-2 border-black py-4 lg:p-4 transition-opacity duration-200 hover:opacity-75 lg:hover:-translate-y-1 lg:hover:shadow-lg active:opacity-50 cursor-pointer lg:bg-white"
+              className="w-full border-b-2 lg:border-2 border-black py-4 lg:p-4 transition-all duration-200 hover:opacity-90 lg:hover:-translate-y-1 lg:hover:shadow-lg active:opacity-50 cursor-pointer lg:bg-white flex flex-row lg:flex-col items-center lg:items-start group"
             >
-              <div className="font-andale uppercase text-sm tracking-wider">
+              <div className="w-16 h-16 lg:w-full lg:h-48 relative flex-shrink-0 bg-gray-100 mr-4 lg:mr-0 lg:mb-4 border border-black overflow-hidden">
+                <Image 
+                  src={park.images && park.images.length > 0 ? park.images[0] : '/placeholder.jpg'} 
+                  alt={park.name} 
+                  fill 
+                  className="object-cover group-hover:scale-105 transition-transform duration-500" 
+                />
+              </div>
+              <div className="font-andale uppercase text-sm tracking-wider flex-1">
                 <ScrambleText text={park.name} />
               </div>
             </div>
