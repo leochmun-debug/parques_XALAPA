@@ -21,7 +21,7 @@ export default function Header({ onNavigate }: HeaderProps) {
         {/* Hamburger Menu - absolute top right on all views */}
         <button 
           onClick={() => setMenuOpen(true)}
-          className="absolute top-8 right-4 lg:right-6 w-8 h-8 flex flex-col justify-center space-y-1.5 p-1 group focus:outline-none hover:opacity-50 transition-opacity z-40" 
+          className="absolute top-10 right-4 lg:right-6 w-8 h-8 flex flex-col justify-center space-y-1.5 p-1 group focus:outline-none hover:opacity-50 transition-opacity z-40" 
           aria-label="Abrir Menu"
         >
           <span className="block w-full h-[2px] bg-black"></span>
