@@ -86,7 +86,7 @@ export default function Map({ userLocation, parks }: MapProps) {
             <Popup minWidth={240} maxWidth={240}>
               <div className="flex flex-col bg-white text-left justify-start m-0 p-0 w-full h-full font-andale text-[11pt]">
                 <div className="w-full h-32 m-0 p-0 relative">
-                  <Image src={park.image} alt={park.name} fill className="object-cover block m-0 p-0" />
+                  <Image src={park.images && park.images.length > 0 ? park.images[0] : '/placeholder.jpg'} alt={park.name} fill className="object-cover block m-0 p-0" />
                 </div>
                 <div className="p-4 flex flex-col items-start justify-start text-left">
                   <h4 className="font-helvetica font-bold text-sm uppercase m-0 leading-tight">

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import NoiseOverlay from "../components/NoiseOverlay";
 
 export const metadata: Metadata = {
   title: "Parques Xalapa",
@@ -29,6 +30,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className="min-h-full flex flex-col font-andale bg-white text-black antialiased">
+        <NoiseOverlay />
         {children}
       </body>
     </html>

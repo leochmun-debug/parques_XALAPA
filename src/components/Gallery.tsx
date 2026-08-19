@@ -8,9 +8,10 @@ import { ParkWithDistance } from '@/app/page';
 interface GalleryProps {
   parks: ParkWithDistance[];
   onParkClick: (park: Park) => void;
+  onParkHover?: (park: Park) => void;
 }
 
-export default function Gallery({ parks, onParkClick }: GalleryProps) {
+export default function Gallery({ parks, onParkClick, onParkHover }: GalleryProps) {
   return (
     <section className="w-full pt-2 pb-12 mb-16 overflow-hidden">
       {/* STRICT AXIS RULE: Gallery items gap alignment. 
@@ -19,16 +20,17 @@ export default function Gallery({ parks, onParkClick }: GalleryProps) {
            Therefore, the right edge of Card 2 (and the start of the vertical gap between Card 2 & 3)
            aligns absolutely perfectly with the 280px vertical layout axis established by the logos! */}
       
-      <div className="flex overflow-x-auto snap-x snap-mandatory no-scrollbar gap-4 px-4 pb-4" id="gallery-grid">
+      <div className="flex overflow-x-auto snap-x snap-mandatory no-scrollbar gap-4 px-4 pb-4 lg:pb-8" id="gallery-grid">
         {parks.map((park, idx) => (
           <div 
             key={idx}
-            className="snap-start flex-none w-[132px] flex flex-col items-start text-left cursor-pointer group"
+            className="snap-start flex-none w-[132px] flex flex-col items-start text-left cursor-pointer group transition-all duration-300 lg:hover:-translate-y-2 lg:hover:shadow-2xl bg-white"
             onClick={() => onParkClick(park)}
+            onMouseEnter={() => onParkHover && onParkHover(park)}
           >
             <div className="w-full aspect-square overflow-hidden bg-gray-100 mb-2 relative group-hover:opacity-90 transition-opacity">
               <Image 
-                src={park.image} 
+                src={park.images && park.images.length > 0 ? park.images[0] : '/placeholder.jpg'} 
                 alt={park.name} 
                 fill
                 className="object-cover" 
@@ -39,7 +41,7 @@ export default function Gallery({ parks, onParkClick }: GalleryProps) {
                 </div>
               )}
             </div>
-            <h3 className="font-helvetica font-bold text-[11pt] uppercase leading-tight line-clamp-2 m-0 group-hover:text-blue-600 transition-colors">
+            <h3 className="font-helvetica font-bold text-[11pt] uppercase leading-tight line-clamp-2 m-0 group-hover:text-blue-600 transition-colors lg:px-2 lg:pb-2">
               {park.name}
             </h3>
           </div>

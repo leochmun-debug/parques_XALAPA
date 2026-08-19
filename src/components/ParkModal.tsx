@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { Park } from '@/data/parks';
+import { ScrambleText } from './ScrambleText';
 
 interface ParkModalProps {
   park: Park | null;
@@ -28,54 +29,70 @@ export default function ParkModal({ park, onClose }: ParkModalProps) {
         </button>
       </div>
 
-      <div className="w-full max-w-md mx-auto flex flex-col items-start justify-start text-left pb-16">
+      <div className="w-full max-w-md lg:max-w-[1200px] mx-auto flex flex-col lg:flex-row items-start justify-start text-left pb-16 lg:px-8">
         
-        {/* Title */}
-        <h1 className="font-helvetica font-bold text-2xl px-4 mb-4 uppercase w-full">
-          {park.name}
-        </h1>
+        {/* Left Side: Images & Title */}
+        <div className="w-full lg:w-1/2 flex flex-col pr-0 lg:pr-8">
+          {/* Title */}
+          <h1 className="font-helvetica font-bold text-2xl px-4 lg:px-0 mb-4 uppercase w-full">
+            {park.name}
+          </h1>
 
-        {/* Hero Image - Zero Side Padding */}
-        <div className="w-full relative h-[300px] mb-6">
-          <Image 
-            src={park.image} 
-            alt={park.name} 
-            fill 
-            className="object-cover"
-            priority
-          />
+          {/* Hero Image / Gallery */}
+          <div className="w-full relative h-[300px] lg:h-[500px] mb-6 flex flex-col">
+            <div className="w-full h-full relative">
+              <Image 
+                src={park.images && park.images.length > 0 ? park.images[0] : '/placeholder.jpg'} 
+                alt={park.name} 
+                fill 
+                className="object-cover"
+                priority
+              />
+            </div>
+            {/* If there are more images, we could render a small strip here. 
+                For now we just use the first image since most only have one. */}
+            {park.images && park.images.length > 1 && (
+              <div className="flex flex-row overflow-x-auto gap-2 mt-2">
+                {park.images.map((img, idx) => (
+                  <div key={idx} className="w-20 h-20 relative flex-shrink-0">
+                    <Image src={img} alt={`${park.name} ${idx}`} fill className="object-cover" />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Data Sheet */}
-        <div className="w-full px-4 flex flex-col space-y-4">
+        {/* Right Side: Data Sheet */}
+        <div className="w-full lg:w-1/2 px-4 lg:px-0 flex flex-col space-y-4 lg:mt-12">
           <div className="flex flex-col">
             <span className="font-bold">Horario de apertura:</span>
-            <span>{park.horario}</span>
+            <ScrambleText text={park.horario} />
           </div>
           
           <div className="flex flex-col">
             <span className="font-bold">Uso general del parque:</span>
-            <span>{park.uso_general || "No disponible"}</span>
+            <ScrambleText text={park.uso_general || "No disponible"} />
           </div>
           
           <div className="flex flex-col">
             <span className="font-bold">Infraestructura presente:</span>
-            <span>{park.infraestructura || "No disponible"}</span>
+            <ScrambleText text={park.infraestructura || "No disponible"} />
           </div>
           
           <div className="flex flex-col">
             <span className="font-bold">Año de inauguración:</span>
-            <span>{park.año_inauguracion || "Desconocido"}</span>
+            <ScrambleText text={park.año_inauguracion || "Desconocido"} />
           </div>
           
           <div className="flex flex-col">
             <span className="font-bold">Estado general del inmueble:</span>
-            <span>{park.estado_general || "Sin evaluación reciente"}</span>
+            <ScrambleText text={park.estado_general || "Sin evaluación reciente"} />
           </div>
           
           <div className="flex flex-col">
             <span className="font-bold">Última rehabilitación:</span>
-            <span>{park.ultima_rehabilitacion || "No registrada"}</span>
+            <ScrambleText text={park.ultima_rehabilitacion || "No registrada"} />
           </div>
         </div>
 

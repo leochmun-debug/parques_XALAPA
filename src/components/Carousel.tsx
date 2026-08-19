@@ -23,7 +23,7 @@ export default function Carousel() {
         {parks.map((park, idx) => (
           <div key={idx} className="flex-[0_0_100%] min-w-0 snap-start snap-always relative aspect-square bg-gray-100">
             <Image 
-              src={park.image} 
+              src={park.images && park.images.length > 0 ? park.images[0] : '/placeholder.jpg'} 
               alt={park.name} 
               fill
               className="object-cover" 

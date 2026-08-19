@@ -6,86 +6,7 @@ interface ArchiveViewProps {
   onClose: () => void;
 }
 
-// Scramble text effect component
-const ScrambleText = ({ text }: { text: string }) => {
-  const [displayText, setDisplayText] = useState(text);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const elementRef = useRef<HTMLSpanElement>(null);
-  const hasAnimatedRef = useRef(false);
-  
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-  const scramble = () => {
-    let iteration = 0;
-    
-    if (intervalRef.current) clearInterval(intervalRef.current);
-    
-    intervalRef.current = setInterval(() => {
-      setDisplayText((prev) => 
-        text
-          .split('')
-          .map((letter, index) => {
-            if (index < iteration) {
-              return text[index];
-            }
-            return chars[Math.floor(Math.random() * chars.length)];
-          })
-          .join('')
-      );
-      
-      if (iteration >= text.length) {
-        if (intervalRef.current) clearInterval(intervalRef.current);
-      }
-      
-      iteration += 1 / 2; // Speed control
-    }, 30);
-  };
-
-  const reset = () => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
-    setDisplayText(text);
-  };
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !hasAnimatedRef.current) {
-          scramble();
-          hasAnimatedRef.current = true; // Only animate once per mount/scroll to prevent annoying looping
-        } else if (!entries[0].isIntersecting) {
-          // Reset so it animates again when they scroll back to it
-          hasAnimatedRef.current = false;
-          reset();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (elementRef.current) {
-      observer.observe(elementRef.current);
-    }
-
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-      observer.disconnect();
-    };
-  }, [text]);
-
-  return (
-    <span 
-      ref={elementRef}
-      onMouseEnter={() => {
-        // Still allow manual hover trigger for desktop users
-        hasAnimatedRef.current = true;
-        scramble();
-      }}
-      onMouseLeave={reset}
-      className="cursor-pointer inline-block w-full"
-    >
-      {displayText}
-    </span>
-  );
-};
+import { ScrambleText } from './ScrambleText';
 
 export default function ArchiveView({ onParkSelect, onClose }: ArchiveViewProps) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -112,7 +33,7 @@ export default function ArchiveView({ onParkSelect, onClose }: ArchiveViewProps)
         </button>
       </div>
 
-      <div className="w-full max-w-md mx-auto relative flex flex-col items-start justify-start text-left px-4 pb-8">
+      <div className="w-full max-w-md lg:max-w-6xl mx-auto relative flex flex-col items-start justify-start text-left px-4 lg:px-8 pb-8">
         
         <h1 className="font-helvetica font-bold text-xl leading-tight mb-2 uppercase">
           Más de 80 parques y áreas verdes
@@ -132,12 +53,12 @@ export default function ArchiveView({ onParkSelect, onClose }: ArchiveViewProps)
           />
         </div>
 
-        <div className="w-full flex flex-col border-t-2 border-black">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-4 gap-4 border-t-2 border-black pt-4">
           {filteredParks.map((park, index) => (
             <div 
               key={index}
               onClick={() => onParkSelect(park)}
-              className="w-full border-b-2 border-black py-4 transition-opacity duration-200 hover:opacity-75 active:opacity-50"
+              className="w-full border-b-2 lg:border-2 border-black py-4 lg:p-4 transition-opacity duration-200 hover:opacity-75 lg:hover:-translate-y-1 lg:hover:shadow-lg active:opacity-50 cursor-pointer lg:bg-white"
             >
               <div className="font-andale uppercase text-sm tracking-wider">
                 <ScrambleText text={park.name} />
