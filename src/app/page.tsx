@@ -91,7 +91,7 @@ export default function Home() {
             <Header onNavigate={handleHeaderNav} />
             
             {/* Mobile Carousel - hidden on lg */}
-            <div className="lg:hidden">
+            <div className="lg:hidden -mx-4 w-[calc(100%+2rem)] sm:-mx-6 sm:w-[calc(100%+3rem)]">
               <Carousel />
             </div>
 

@@ -17,51 +17,49 @@ export default function Header({ onNavigate }: HeaderProps) {
 
   return (
     <>
-      <header className="w-full pt-8 pb-6 px-4 lg:px-0">
-        <div className="flex flex-col justify-start items-start w-full">
-          <div className="flex flex-row justify-between items-start w-full">
-            <div className="w-[280px]">
-              <Image 
-                src="/bienvenidos.png" 
-                alt="Bienvenidos" 
-                width={280}
-                height={60}
-                style={{ width: '100%', height: 'auto' }}
-                priority
-              />
-            </div>
-            
-            {/* Hamburger Menu - top right in mobile flow, absolute top right on desktop */}
-            <button 
-              onClick={() => setMenuOpen(true)}
-              className="w-8 h-8 flex flex-col justify-center space-y-1.5 p-1 group focus:outline-none hover:opacity-50 transition-opacity lg:absolute lg:top-8 lg:right-6 z-40" 
-              aria-label="Abrir Menu"
-            >
-              <span className="block w-full h-[2px] bg-black"></span>
-              <span className="block w-full h-[2px] bg-black"></span>
-              <span className="block w-3/4 h-[2px] bg-black ml-auto"></span>
-            </button>
+      <header className="w-full pt-8 pb-6 px-4 lg:px-0 relative">
+        {/* Hamburger Menu - absolute top right on all views */}
+        <button 
+          onClick={() => setMenuOpen(true)}
+          className="absolute top-8 right-4 lg:right-6 w-8 h-8 flex flex-col justify-center space-y-1.5 p-1 group focus:outline-none hover:opacity-50 transition-opacity z-40" 
+          aria-label="Abrir Menu"
+        >
+          <span className="block w-full h-[2px] bg-black"></span>
+          <span className="block w-full h-[2px] bg-black"></span>
+          <span className="block w-3/4 h-[2px] bg-black ml-auto"></span>
+        </button>
+
+        <div className="flex flex-col justify-start items-end w-full pt-8 lg:pt-0">
+          <div className="w-[280px] flex justify-end">
+            <Image 
+              src="/bienvenidos.png" 
+              alt="Bienvenidos" 
+              width={280}
+              height={60}
+              style={{ width: '100%', height: 'auto' }}
+              priority
+            />
           </div>
-        </div>
 
-        <div className="w-[280px] mt-4">
-          <Image 
-            src="/visita_tus_parque_y_jardines.png" 
-            alt="Visita tus parques y jardines" 
-            width={280}
-            height={70}
-            style={{ width: '100%', height: 'auto' }}
-          />
-        </div>
+          <div className="w-[280px] mt-4 flex justify-end">
+            <Image 
+              src="/visita_tus_parque_y_jardines.png" 
+              alt="Visita tus parques y jardines" 
+              width={280}
+              height={70}
+              style={{ width: '100%', height: 'auto' }}
+            />
+          </div>
 
-        <div className="w-[280px] mt-2">
-          <Image 
-            src="/logo_triple_negros_usar.png" 
-            alt="Logos Institucionales" 
-            width={280}
-            height={35}
-            style={{ width: '100%', height: 'auto' }}
-          />
+          <div className="w-[280px] mt-2 flex justify-end">
+            <Image 
+              src="/logo_triple_negros_usar.png" 
+              alt="Logos Institucionales" 
+              width={280}
+              height={35}
+              style={{ width: '100%', height: 'auto' }}
+            />
+          </div>
         </div>
       </header>
 
