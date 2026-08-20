@@ -18,12 +18,12 @@ export default function Header({ onNavigate }: HeaderProps) {
   return (
     <>
       <header className="w-full pt-16 pb-6 lg:px-0">
-        <div className="relative w-[280px] ml-8 lg:ml-0 flex flex-col justify-start items-start">
+        <div className="relative w-[280px] ml-4 lg:ml-0 flex flex-col justify-start items-start">
           
           {/* Hamburger Menu - perfectly tracks the right yellow line (left-full) and top aligns with logos */}
           <button 
             onClick={() => setMenuOpen(true)}
-            className="absolute top-0 left-full ml-1 lg:right-6 lg:left-auto w-6 h-6 flex flex-col justify-center space-y-1 p-1 group focus:outline-none hover:opacity-50 transition-opacity z-40" 
+            className="absolute -top-3 left-full ml-1 lg:right-6 lg:left-auto w-6 h-6 flex flex-col justify-center space-y-1 p-1 group focus:outline-none hover:opacity-50 transition-opacity z-40" 
             aria-label="Abrir Menu"
           >
             <span className="block w-full h-[2px] bg-black"></span>
