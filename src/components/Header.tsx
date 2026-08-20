@@ -17,29 +17,30 @@ export default function Header({ onNavigate }: HeaderProps) {
 
   return (
     <>
-      <header className="w-full pt-16 pb-6 lg:px-0">
-        <div className="relative w-[280px] ml-4 lg:ml-0 flex flex-col justify-start items-start">
+      <header className="w-full pt-16 pb-6 px-4">
+        <div className="flex flex-col justify-start items-start w-full">
           
-          {/* Hamburger Menu - perfectly tracks the right yellow line (left-full) and top aligns with logos */}
-          <button 
-            onClick={() => setMenuOpen(true)}
-            className="absolute -top-3 left-full ml-1 lg:right-6 lg:left-auto w-6 h-6 flex flex-col justify-center space-y-1 p-1 group focus:outline-none hover:opacity-50 transition-opacity z-40" 
-            aria-label="Abrir Menu"
-          >
-            <span className="block w-full h-[2px] bg-black"></span>
-            <span className="block w-full h-[2px] bg-black"></span>
-            <span className="block w-3/4 h-[2px] bg-black ml-auto"></span>
-          </button>
-
-          <div className="w-[280px] flex justify-start">
-            <Image 
-              src="/bienvenidos.png" 
-              alt="Bienvenidos" 
-              width={280}
-              height={60}
-              style={{ width: '100%', height: 'auto' }}
-              priority
-            />
+          <div className="flex flex-row justify-between items-center w-full">
+            <div className="w-[280px] flex justify-start">
+              <Image 
+                src="/bienvenidos.png" 
+                alt="Bienvenidos" 
+                width={280}
+                height={60}
+                style={{ width: '100%', height: 'auto' }}
+                priority
+              />
+            </div>
+            
+            <button 
+              onClick={() => setMenuOpen(true)}
+              className="w-8 h-8 flex flex-col justify-center space-y-1.5 p-1 group focus:outline-none hover:opacity-50 transition-opacity z-40 m-0" 
+              aria-label="Abrir Menu"
+            >
+              <span className="block w-full h-[2px] bg-black"></span>
+              <span className="block w-full h-[2px] bg-black"></span>
+              <span className="block w-3/4 h-[2px] bg-black ml-auto"></span>
+            </button>
           </div>
 
           <div className="w-[280px] mt-4 flex justify-start">
