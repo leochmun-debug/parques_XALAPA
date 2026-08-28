@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Header from '@/components/Header';
 import Carousel from '@/components/Carousel';
 import Gallery from '@/components/Gallery';
@@ -10,6 +10,7 @@ import ArchiveView from '@/components/ArchiveView';
 import { Park, parks } from '@/data/parks';
 import { calculateHaversineDistance } from '@/utils/distance';
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
 
 const Map = dynamic(() => import('@/components/Map'), { ssr: false });
 
@@ -17,14 +18,107 @@ export interface ParkWithDistance extends Park {
   distanceKm?: number;
 }
 
+const parkNfcMap: Record<string, { name: string, image: string }> = {
+  juarez: { name: 'PARQUE JUÁREZ', image: '/juarez.png' },
+  naturalia: { name: 'NATURALIA', image: '/naturalia_NFC.png' },
+  bicentenario: { name: 'PARQUE BICENTENARIO', image: '/parque_bicentenario_NFC.png' },
+  los_lagos: { name: 'LOS LAGOS', image: '/los_lagos_NFC.png' },
+  macuiltepetl: { name: 'MACUILTÉPETL', image: '/macuiltepetl_NFC.png' },
+};
+
+function NfcWelcomeView({ 
+  parkId, 
+  challenge, 
+  onDismiss 
+}: { 
+  parkId: string; 
+  challenge: string; 
+  onDismiss: () => void; 
+}) {
+  const parkData = parkNfcMap[parkId] || { name: parkId.toUpperCase(), image: '/placeholder.jpg' };
+
+  return (
+    <div className="w-full min-h-screen bg-[#f4f4f4] flex flex-col justify-start text-left font-andale pb-12">
+      {/* Hero Image */}
+      <div className="relative w-full h-64">
+        <Image 
+          src={parkData.image} 
+          alt={parkData.name} 
+          fill 
+          className="object-cover" 
+          priority 
+        />
+        <div className="absolute inset-0 bg-black/20" /> {/* Slight overlay for text readability */}
+        <h1 className="absolute bottom-4 left-4 text-white font-helvetica font-bold text-3xl uppercase leading-none drop-shadow-md">
+          BIENVENIDES A<br />{parkData.name}
+        </h1>
+      </div>
+
+      {/* Institutional Logos */}
+      <div className="w-full px-4 mt-6 flex justify-start">
+        <Image 
+          src="/logo_triple_negros_usar.png" 
+          alt="Logos Institucionales" 
+          width={280} 
+          height={35} 
+          style={{ maxWidth: '280px', height: 'auto' }} 
+        />
+      </div>
+
+      {/* Challenge Section */}
+      <div className="w-full px-4 mt-10 flex flex-col items-start text-left">
+        <h2 className="font-helvetica font-bold text-2xl text-green-800 lowercase leading-tight">
+          {challenge}
+        </h2>
+        
+        {/* Progress Trees */}
+        <div className="flex flex-row gap-2 mt-6">
+          <Image src="/arbolito.png" alt="Arbolito completado" width={32} height={40} />
+          <Image src="/arbolito.png" alt="Arbolito completado" width={32} height={40} />
+          <Image src="/arbolito.png" alt="Arbolito completado" width={32} height={40} />
+          <Image src="/arbolito vacio.png" alt="Arbolito vacío" width={32} height={40} />
+          <Image src="/arbolito vacio.png" alt="Arbolito vacío" width={32} height={40} />
+        </div>
+        
+        <p className="font-helvetica font-medium text-green-800 text-lg lowercase mt-4 leading-snug tracking-wide">
+          completa dos arbolitos más para reclamar tu premio
+        </p>
+      </div>
+
+      {/* Action Button */}
+      <div className="w-full px-4 mt-12 mb-8">
+        <button 
+          onClick={onDismiss}
+          className="w-full bg-black text-white font-helvetica font-bold uppercase py-4 text-xl tracking-wider hover:bg-gray-800 transition-opacity active:opacity-50"
+        >
+          ingresar al portal
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
-  const [activeView, setActiveView] = useState<'dashboard' | 'archive' | 'modal'>('dashboard');
+  const [activeView, setActiveView] = useState<'dashboard' | 'archive' | 'modal' | 'nfc'>('dashboard');
   const [previousView, setPreviousView] = useState<'dashboard' | 'archive'>('dashboard');
   const [selectedPark, setSelectedPark] = useState<Park | null>(null);
   const [userLocation, setUserLocation] = useState<LocationCoords | null>(null);
+  const [nfcParams, setNfcParams] = useState<{ parkId: string, challenge: string } | null>(null);
   
   // State for the desktop Hero Image preview
   const [hoveredPark, setHoveredPark] = useState<Park | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const parkId = params.get('park_id');
+      const challenge = params.get('challenge');
+      if (parkId && challenge) {
+        setNfcParams({ parkId, challenge });
+        setActiveView('nfc');
+      }
+    }
+  }, []);
 
   // Compute sorted parks based on distance
   const displayParks = useMemo(() => {
@@ -67,6 +161,10 @@ export default function Home() {
       }, 100);
     }
   };
+
+  if (activeView === 'nfc' && nfcParams) {
+    return <NfcWelcomeView parkId={nfcParams.parkId} challenge={nfcParams.challenge} onDismiss={() => setActiveView('dashboard')} />;
+  }
 
   if (activeView === 'archive') {
     return <ArchiveView onParkSelect={(park) => handleOpenModal(park, 'archive')} onClose={() => setActiveView('dashboard')} />;
