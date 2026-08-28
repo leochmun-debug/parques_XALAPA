@@ -24,7 +24,7 @@ const parkNfcMap: Record<string, { name: string, image: string, imageClass?: str
   bicentenario: { 
     name: 'PARQUE BICENTENARIO', 
     image: '/parque_bicentenario_NFC.png',
-    imageClass: 'object-cover object-right',
+    imageClass: 'object-cover object-left',
     titleClass: 'text-[1.35rem]'
   },
   los_lagos: { name: 'LOS LAGOS', image: '/los_lagos_NFC.png' },
