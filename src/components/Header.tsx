@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 
 interface HeaderProps {
-  onNavigate?: (view: 'inicio' | 'mapa' | 'archivo' | 'galeria') => void;
+  onNavigate?: (view: 'inicio' | 'mapa' | 'archivo' | 'galeria' | 'nfc_simulator') => void;
 }
 
 export default function Header({ onNavigate }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const handleNav = (target: 'inicio' | 'mapa' | 'archivo' | 'galeria') => {
+  const handleNav = (target: 'inicio' | 'mapa' | 'archivo' | 'galeria' | 'nfc_simulator') => {
     setMenuOpen(false);
     if (onNavigate) {
       onNavigate(target);
@@ -98,6 +98,7 @@ export default function Header({ onNavigate }: HeaderProps) {
               <button onClick={() => handleNav('mapa')} className="hover:text-gray-500 transition-colors">MAPA</button>
               <button onClick={() => handleNav('archivo')} className="hover:text-gray-500 transition-colors">ARCHIVO</button>
               <button onClick={() => handleNav('galeria')} className="hover:text-gray-500 transition-colors">GALERÍA</button>
+              <button onClick={() => handleNav('nfc_simulator')} className="hover:text-gray-500 transition-colors text-green-700 mt-8 text-xl">SIMULAR NFC</button>
             </div>
           </div>
         </div>

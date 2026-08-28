@@ -143,9 +143,12 @@ export default function Home() {
     setActiveView(previousView);
   };
 
-  const handleHeaderNav = (view: 'inicio' | 'mapa' | 'archivo' | 'galeria') => {
+  const handleHeaderNav = (view: 'inicio' | 'mapa' | 'archivo' | 'galeria' | 'nfc_simulator') => {
     if (view === 'archivo') {
       setActiveView('archive');
+    } else if (view === 'nfc_simulator') {
+      setNfcParams({ parkId: 'juarez', challenge: '¡reto ecológico activado!' });
+      setActiveView('nfc');
     } else {
       setActiveView('dashboard');
       setTimeout(() => {
