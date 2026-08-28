@@ -37,8 +37,17 @@ function NfcWelcomeView({
 }) {
   const parkData = parkNfcMap[parkId] || { name: parkId.toUpperCase(), image: '/placeholder.jpg' };
 
+  // Parse challenge text if it matches "¡reto ecológico activado!" to break it as in the mockup
+  const challengeLines = challenge.toLowerCase().includes('ecológico') 
+    ? challenge.replace('ecológico', '<br/>ecológico')
+    : challenge;
+
   return (
     <div className="w-full min-h-screen bg-[#f4f4f4] flex flex-col justify-start text-left font-andale pb-12">
+      
+      {/* Top spacing to match the mockup's empty banner area */}
+      <div className="w-full h-24 bg-[#f4f4f4]"></div>
+
       {/* Hero Image */}
       <div className="relative w-full h-64">
         <Image 
@@ -48,14 +57,14 @@ function NfcWelcomeView({
           className="object-cover" 
           priority 
         />
-        <div className="absolute inset-0 bg-black/20" /> {/* Slight overlay for text readability */}
-        <h1 className="absolute bottom-4 left-4 text-white font-helvetica font-bold text-3xl uppercase leading-none drop-shadow-md">
+        <div className="absolute inset-0 bg-black/10" /> {/* Slight overlay for text readability */}
+        <h1 className="absolute bottom-4 left-6 text-white font-helvetica font-bold text-3xl uppercase leading-tight drop-shadow-md pr-4">
           BIENVENIDES A<br />{parkData.name}
         </h1>
       </div>
 
       {/* Institutional Logos */}
-      <div className="w-full px-4 mt-6 flex justify-start">
+      <div className="w-full px-6 mt-6 flex justify-start">
         <Image 
           src="/logo_triple_negros_usar.png" 
           alt="Logos Institucionales" 
@@ -66,27 +75,36 @@ function NfcWelcomeView({
       </div>
 
       {/* Challenge Section */}
-      <div className="w-full px-4 mt-10 flex flex-col items-start text-left">
-        <h2 className="font-helvetica font-bold text-2xl text-green-800 lowercase leading-tight">
-          {challenge}
-        </h2>
+      <div className="w-full px-6 mt-10 flex flex-col items-start text-left">
+        <h2 
+          className="font-helvetica font-bold text-4xl text-[#1b7340] lowercase leading-none tracking-tight"
+          dangerouslySetInnerHTML={{ __html: challengeLines }}
+        />
+        
+        <p className="font-helvetica font-medium text-[#1b7340] text-[1.15rem] lowercase mt-6 leading-snug pr-4">
+          registra tu recorrido en las áreas verdes marcadas para validar tu permanencia y desbloquear beneficios municipales.
+        </p>
+
+        <p className="font-helvetica font-medium text-[#1b7340] text-[1.15rem] lowercase mt-10 leading-snug pr-4">
+          con cada toque de tu celular en el lugar marcado acumulas arbolitos, que después podrás cambiar por uno verdadero.
+        </p>
         
         {/* Progress Trees */}
-        <div className="flex flex-row gap-2 mt-6">
-          <Image src="/arbolito.png" alt="Arbolito completado" width={32} height={40} />
-          <Image src="/arbolito.png" alt="Arbolito completado" width={32} height={40} />
-          <Image src="/arbolito.png" alt="Arbolito completado" width={32} height={40} />
-          <Image src="/arbolito vacio.png" alt="Arbolito vacío" width={32} height={40} />
-          <Image src="/arbolito vacio.png" alt="Arbolito vacío" width={32} height={40} />
+        <div className="flex flex-row justify-between w-full mt-8 px-2">
+          <Image src="/arbolito.png" alt="Arbolito completado" width={60} height={75} className="object-contain" />
+          <Image src="/arbolito.png" alt="Arbolito completado" width={60} height={75} className="object-contain" />
+          <Image src="/arbolito.png" alt="Arbolito completado" width={60} height={75} className="object-contain" />
+          <Image src="/arbolito vacio.png" alt="Arbolito vacío" width={60} height={75} className="object-contain" />
+          <Image src="/arbolito vacio.png" alt="Arbolito vacío" width={60} height={75} className="object-contain" />
         </div>
         
-        <p className="font-helvetica font-medium text-green-800 text-lg lowercase mt-4 leading-snug tracking-wide">
+        <p className="font-helvetica font-medium text-[#1b7340] text-[15px] lowercase mt-6 text-center w-full">
           completa dos arbolitos más para reclamar tu premio
         </p>
       </div>
 
-      {/* Action Button */}
-      <div className="w-full px-4 mt-12 mb-8">
+      {/* Action Button (Optional for NFC view, but keeping as requested earlier) */}
+      <div className="w-full px-6 mt-16 mb-8">
         <button 
           onClick={onDismiss}
           className="w-full bg-black text-white font-helvetica font-bold uppercase py-4 text-xl tracking-wider hover:bg-gray-800 transition-opacity active:opacity-50"
