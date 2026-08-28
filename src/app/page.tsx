@@ -16,6 +16,8 @@ const Map = dynamic(() => import('@/components/Map'), { ssr: false });
 
 export interface ParkWithDistance extends Park {
   distanceKm?: number;
+}
+
 const parkNfcMap: Record<string, { name: string, image: string, imageClass?: string, titleClass?: string }> = {
   juarez: { name: 'PARQUE JUÁREZ', image: '/juarez_NFC.png' },
   naturalia: { name: 'NATURALIA', image: '/naturalia_NFC.png' },
