@@ -19,7 +19,7 @@ export interface ParkWithDistance extends Park {
 }
 
 const parkNfcMap: Record<string, { name: string, image: string }> = {
-  juarez: { name: 'PARQUE JUÁREZ', image: '/juarez.png' },
+  juarez: { name: 'PARQUE JUÁREZ', image: '/juarez_NFC.png' },
   naturalia: { name: 'NATURALIA', image: '/naturalia_NFC.png' },
   bicentenario: { name: 'PARQUE BICENTENARIO', image: '/parque_bicentenario_NFC.png' },
   los_lagos: { name: 'LOS LAGOS', image: '/los_lagos_NFC.png' },
