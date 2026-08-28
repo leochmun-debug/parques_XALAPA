@@ -16,12 +16,15 @@ const Map = dynamic(() => import('@/components/Map'), { ssr: false });
 
 export interface ParkWithDistance extends Park {
   distanceKm?: number;
-}
-
-const parkNfcMap: Record<string, { name: string, image: string }> = {
+const parkNfcMap: Record<string, { name: string, image: string, imageClass?: string, titleClass?: string }> = {
   juarez: { name: 'PARQUE JUÁREZ', image: '/juarez_NFC.png' },
   naturalia: { name: 'NATURALIA', image: '/naturalia_NFC.png' },
-  bicentenario: { name: 'PARQUE BICENTENARIO', image: '/parque_bicentenario_NFC.png' },
+  bicentenario: { 
+    name: 'PARQUE BICENTENARIO', 
+    image: '/parque_bicentenario_NFC.png',
+    imageClass: 'object-cover object-right',
+    titleClass: 'text-[1.35rem]'
+  },
   los_lagos: { name: 'LOS LAGOS', image: '/los_lagos_NFC.png' },
   macuiltepetl: { name: 'MACUILTÉPETL', image: '/macuiltepetl_NFC.png' },
 };
@@ -54,12 +57,13 @@ function NfcWelcomeView({
           src={parkData.image} 
           alt={parkData.name} 
           fill 
-          className="object-cover" 
+          className={parkData.imageClass || 'object-cover'} 
           priority 
         />
         <div className="absolute inset-0 bg-black/10" /> {/* Slight overlay for text readability */}
-        <h1 className="absolute bottom-4 left-6 text-white font-helvetica font-bold text-3xl uppercase leading-tight drop-shadow-md pr-4">
-          BIENVENIDES A<br />{parkData.name}
+        <h1 className="absolute bottom-4 left-6 text-white font-helvetica font-bold uppercase leading-tight drop-shadow-md pr-4">
+          <span className="text-3xl">BIENVENIDES A</span><br />
+          <span className={parkData.titleClass || 'text-3xl'}>{parkData.name}</span>
         </h1>
       </div>
 
