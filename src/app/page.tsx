@@ -141,12 +141,13 @@ export default function Home() {
       if (parkId && challenge) {
         // Track visited parks
         const stored = localStorage.getItem('visited_parks');
-        let visited: string[] = stored ? JSON.parse(stored) : [];
+        const visited: string[] = stored ? JSON.parse(stored) : [];
         if (!visited.includes(parkId)) {
           visited.push(parkId);
           localStorage.setItem('visited_parks', JSON.stringify(visited));
         }
 
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setNfcParams({ parkId, challenge });
         
         if (visited.length >= 5) {
@@ -187,7 +188,7 @@ export default function Home() {
     } else if (view === 'nfc_simulator') {
       const simParkId = 'juarez';
       const stored = localStorage.getItem('visited_parks');
-      let visited: string[] = stored ? JSON.parse(stored) : [];
+      const visited: string[] = stored ? JSON.parse(stored) : [];
       if (!visited.includes(simParkId)) {
         visited.push(simParkId);
         localStorage.setItem('visited_parks', JSON.stringify(visited));
