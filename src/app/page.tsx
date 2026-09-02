@@ -12,6 +12,7 @@ import { Park, parks } from '@/data/parks';
 import { calculateHaversineDistance } from '@/utils/distance';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
+import { motion } from 'motion/react';
 
 const Map = dynamic(() => import('@/components/Map'), { ssr: false });
 
@@ -35,15 +36,34 @@ const parkNfcMap: Record<string, { name: string, image: string, imageClass?: str
 function NfcWelcomeView({ 
   parkId, 
   challenge, 
-  onDismiss 
+  visitedParks,
+  isNewVisit,
+  onDismiss,
+  onClaimCertificate
 }: { 
   parkId: string; 
   challenge: string; 
+  visitedParks: string[];
+  isNewVisit: boolean;
   onDismiss: () => void; 
+  onClaimCertificate: () => void;
 }) {
   const parkData = parkNfcMap[parkId] || { name: parkId.toUpperCase(), image: '/placeholder.jpg' };
 
-  // Parse challenge text if it matches "¡reto ecológico activado!" to break it as in the mockup
+  // Calculate trees to show. If it's a new visit, start with 1 less tree to animate it in.
+  const initialCount = isNewVisit ? Math.max(0, visitedParks.length - 1) : visitedParks.length;
+  const [displayedCount, setDisplayedCount] = useState(initialCount);
+
+  useEffect(() => {
+    if (isNewVisit && displayedCount < visitedParks.length) {
+      const timer = setTimeout(() => {
+        setDisplayedCount(visitedParks.length);
+      }, 600); // 600ms delay before filling
+      return () => clearTimeout(timer);
+    }
+  }, [isNewVisit, displayedCount, visitedParks.length]);
+
+  // Parse challenge text
   const challengeLines = challenge.toLowerCase().includes('ecológico') 
     ? challenge.replace('ecológico', '<br/>ecológico')
     : challenge;
@@ -63,7 +83,7 @@ function NfcWelcomeView({
           className={parkData.imageClass || 'object-cover'} 
           priority 
         />
-        <div className="absolute inset-0 bg-black/10" /> {/* Slight overlay for text readability */}
+        <div className="absolute inset-0 bg-black/10" />
         <h1 className="absolute bottom-4 left-6 text-white font-helvetica font-bold uppercase leading-tight drop-shadow-md pr-4">
           <span className="text-3xl">BIENVENIDES A</span><br />
           <span className={parkData.titleClass || 'text-3xl'}>{parkData.name}</span>
@@ -98,25 +118,39 @@ function NfcWelcomeView({
         
         {/* Progress Trees */}
         <div className="flex flex-row justify-between w-full mt-8 px-2">
-          <Image src="/arbolito.png" alt="Arbolito completado" width={60} height={75} className="object-contain" />
-          <Image src="/arbolito.png" alt="Arbolito completado" width={60} height={75} className="object-contain" />
-          <Image src="/arbolito.png" alt="Arbolito completado" width={60} height={75} className="object-contain" />
-          <Image src="/arbolito vacio.png" alt="Arbolito vacío" width={60} height={75} className="object-contain" />
-          <Image src="/arbolito vacio.png" alt="Arbolito vacío" width={60} height={75} className="object-contain" />
+          {Array.from({ length: 5 }).map((_, i) => {
+            const isFilled = i < displayedCount;
+            const isJustFilled = isNewVisit && i === displayedCount - 1;
+            return (
+              <motion.div 
+                key={i}
+                animate={isJustFilled ? { scale: [1, 1.25, 1] } : { scale: 1 }}
+                transition={{ duration: 0.4, ease: "easeInOut" }}
+              >
+                <Image 
+                  src={isFilled ? "/arbolito.png" : "/arbolito vacio.png"} 
+                  alt={isFilled ? "Arbolito completado" : "Arbolito vacío"} 
+                  width={60} 
+                  height={75} 
+                  className="object-contain" 
+                />
+              </motion.div>
+            );
+          })}
         </div>
         
-        <p className="font-helvetica font-medium text-[#1b7340] text-[15px] lowercase mt-6 text-center w-full">
-          completa dos arbolitos más para reclamar tu premio
+        <p className="font-['Andale_Mono'] text-[11pt] mt-6 text-center w-full">
+          {displayedCount < 5 ? "continúa juntando arbolitos" : "¡has completado el reto ecológico!"}
         </p>
       </div>
 
-      {/* Action Button (Optional for NFC view, but keeping as requested earlier) */}
+      {/* Action Button */}
       <div className="w-full px-6 mt-16 mb-8">
         <button 
-          onClick={onDismiss}
-          className="w-full bg-black text-white font-helvetica font-bold uppercase py-4 text-xl tracking-wider hover:bg-gray-800 transition-opacity active:opacity-50"
+          onClick={displayedCount === 5 ? onClaimCertificate : onDismiss}
+          className="w-full bg-transparent border-2 border-black font-['Andale_Mono'] font-bold text-[11pt] uppercase py-4 transition-opacity duration-200 hover:opacity-70 active:opacity-40"
         >
-          ingresar al portal
+          {displayedCount === 5 ? "RECLAMAR CERTIFICADO" : "ingresar al portal principal"}
         </button>
       </div>
     </div>
@@ -128,7 +162,7 @@ export default function Home() {
   const [previousView, setPreviousView] = useState<'dashboard' | 'archive'>('dashboard');
   const [selectedPark, setSelectedPark] = useState<Park | null>(null);
   const [userLocation, setUserLocation] = useState<LocationCoords | null>(null);
-  const [nfcParams, setNfcParams] = useState<{ parkId: string, challenge: string } | null>(null);
+  const [nfcParams, setNfcParams] = useState<{ parkId: string, challenge: string, visitedParks: string[], isNewVisit: boolean } | null>(null);
   
   // State for the desktop Hero Image preview
   const [hoveredPark, setHoveredPark] = useState<Park | null>(null);
@@ -142,19 +176,18 @@ export default function Home() {
         // Track visited parks
         const stored = localStorage.getItem('visited_parks');
         const visited: string[] = stored ? JSON.parse(stored) : [];
+        let isNew = false;
         if (!visited.includes(parkId)) {
           visited.push(parkId);
           localStorage.setItem('visited_parks', JSON.stringify(visited));
+          isNew = true;
         }
 
         // eslint-disable-next-line react-hooks/set-state-in-effect
-        setNfcParams({ parkId, challenge });
+        setNfcParams({ parkId, challenge, visitedParks: visited, isNewVisit: isNew });
         
-        if (visited.length >= 5) {
-          setActiveView('certificate');
-        } else {
-          setActiveView('nfc');
-        }
+        // Always show the NFC welcome view first now so the animation can play!
+        setActiveView('nfc');
       }
     }
   }, []);
@@ -189,17 +222,15 @@ export default function Home() {
       const simParkId = 'juarez';
       const stored = localStorage.getItem('visited_parks');
       const visited: string[] = stored ? JSON.parse(stored) : [];
+      let isNew = false;
       if (!visited.includes(simParkId)) {
         visited.push(simParkId);
         localStorage.setItem('visited_parks', JSON.stringify(visited));
+        isNew = true;
       }
-      setNfcParams({ parkId: simParkId, challenge: '¡reto ecológico activado!' });
+      setNfcParams({ parkId: simParkId, challenge: '¡reto ecológico activado!', visitedParks: visited, isNewVisit: isNew });
       
-      if (visited.length >= 5) {
-        setActiveView('certificate');
-      } else {
-        setActiveView('nfc');
-      }
+      setActiveView('nfc');
     } else {
       setActiveView('dashboard');
       setTimeout(() => {
@@ -222,7 +253,16 @@ export default function Home() {
   }
 
   if (activeView === 'nfc' && nfcParams) {
-    return <NfcWelcomeView parkId={nfcParams.parkId} challenge={nfcParams.challenge} onDismiss={() => setActiveView('dashboard')} />;
+    return (
+      <NfcWelcomeView 
+        parkId={nfcParams.parkId} 
+        challenge={nfcParams.challenge} 
+        visitedParks={nfcParams.visitedParks}
+        isNewVisit={nfcParams.isNewVisit}
+        onDismiss={() => setActiveView('dashboard')} 
+        onClaimCertificate={() => setActiveView('certificate')}
+      />
+    );
   }
 
   if (activeView === 'archive') {

@@ -1,6 +1,13 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import NoiseOverlay from "../components/NoiseOverlay";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1.0,
+  viewportFit: "cover",
+  themeColor: "#064e3b",
+};
 
 export const metadata: Metadata = {
   title: "Parques Xalapa",
