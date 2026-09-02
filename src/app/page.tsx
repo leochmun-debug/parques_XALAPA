@@ -7,6 +7,7 @@ import Gallery from '@/components/Gallery';
 import ParkModal from '@/components/ParkModal';
 import LocationSearch, { LocationCoords } from '@/components/LocationSearch';
 import ArchiveView from '@/components/ArchiveView';
+import CertificateModal from '@/components/CertificateModal';
 import { Park, parks } from '@/data/parks';
 import { calculateHaversineDistance } from '@/utils/distance';
 import dynamic from 'next/dynamic';
@@ -123,7 +124,7 @@ function NfcWelcomeView({
 }
 
 export default function Home() {
-  const [activeView, setActiveView] = useState<'dashboard' | 'archive' | 'modal' | 'nfc'>('dashboard');
+  const [activeView, setActiveView] = useState<'dashboard' | 'archive' | 'modal' | 'nfc' | 'certificate'>('dashboard');
   const [previousView, setPreviousView] = useState<'dashboard' | 'archive'>('dashboard');
   const [selectedPark, setSelectedPark] = useState<Park | null>(null);
   const [userLocation, setUserLocation] = useState<LocationCoords | null>(null);
@@ -138,8 +139,21 @@ export default function Home() {
       const parkId = params.get('park_id');
       const challenge = params.get('challenge');
       if (parkId && challenge) {
+        // Track visited parks
+        const stored = localStorage.getItem('visited_parks');
+        let visited: string[] = stored ? JSON.parse(stored) : [];
+        if (!visited.includes(parkId)) {
+          visited.push(parkId);
+          localStorage.setItem('visited_parks', JSON.stringify(visited));
+        }
+
         setNfcParams({ parkId, challenge });
-        setActiveView('nfc');
+        
+        if (visited.length >= 5) {
+          setActiveView('certificate');
+        } else {
+          setActiveView('nfc');
+        }
       }
     }
   }, []);
@@ -171,8 +185,20 @@ export default function Home() {
     if (view === 'archivo') {
       setActiveView('archive');
     } else if (view === 'nfc_simulator') {
-      setNfcParams({ parkId: 'juarez', challenge: '¡reto ecológico activado!' });
-      setActiveView('nfc');
+      const simParkId = 'juarez';
+      const stored = localStorage.getItem('visited_parks');
+      let visited: string[] = stored ? JSON.parse(stored) : [];
+      if (!visited.includes(simParkId)) {
+        visited.push(simParkId);
+        localStorage.setItem('visited_parks', JSON.stringify(visited));
+      }
+      setNfcParams({ parkId: simParkId, challenge: '¡reto ecológico activado!' });
+      
+      if (visited.length >= 5) {
+        setActiveView('certificate');
+      } else {
+        setActiveView('nfc');
+      }
     } else {
       setActiveView('dashboard');
       setTimeout(() => {
@@ -188,6 +214,11 @@ export default function Home() {
       }, 100);
     }
   };
+
+  if (activeView === 'certificate') {
+    const visited = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('visited_parks') || '[]') : [];
+    return <CertificateModal visitedParks={visited} onDismiss={() => setActiveView('dashboard')} />;
+  }
 
   if (activeView === 'nfc' && nfcParams) {
     return <NfcWelcomeView parkId={nfcParams.parkId} challenge={nfcParams.challenge} onDismiss={() => setActiveView('dashboard')} />;
