@@ -113,34 +113,11 @@ function NfcWelcomeView({
         </p>
 
         <p className="font-helvetica font-medium text-[#1b7340] text-[1.15rem] lowercase mt-10 leading-snug pr-4">
-          con cada toque de tu celular en el lugar marcado acumulas arbolitos, que después podrás cambiar por uno verdadero.
+          con cada toque de tu celular en el lugar marcado acumulas puntos para tu reto.
         </p>
         
-        {/* Progress Trees */}
-        <div className="flex flex-row justify-between w-full mt-8 px-2">
-          {Array.from({ length: 5 }).map((_, i) => {
-            const isFilled = i < displayedCount;
-            const isJustFilled = isNewVisit && i === displayedCount - 1;
-            return (
-              <motion.div 
-                key={i}
-                animate={isJustFilled ? { scale: [1, 1.25, 1] } : { scale: 1 }}
-                transition={{ duration: 0.4, ease: "easeInOut" }}
-              >
-                <Image 
-                  src={isFilled ? "/arbolito.png" : "/arbolito vacio.png"} 
-                  alt={isFilled ? "Arbolito completado" : "Arbolito vacío"} 
-                  width={60} 
-                  height={75} 
-                  className="object-contain" 
-                />
-              </motion.div>
-            );
-          })}
-        </div>
-        
-        <p className="font-['Andale_Mono'] text-[11pt] mt-6 text-center w-full">
-          {displayedCount < 5 ? "continúa juntando arbolitos" : "¡has completado el reto ecológico!"}
+        <p className="font-['Andale_Mono'] text-[#1b7340] font-bold text-[12pt] mt-12 text-center w-full uppercase">
+          {displayedCount < 5 ? "escanea 5 parques para obtener tu recompensa" : "¡has completado el reto ecológico!"}
         </p>
       </div>
 
